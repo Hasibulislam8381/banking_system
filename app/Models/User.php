@@ -21,6 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'account_type',
+        'balance', // Add balance to the fillable attributes
     ];
 
     /**

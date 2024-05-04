@@ -1,6 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+// use  App\Http\Controllers\Auth\RegisterController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -9,3 +13,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user', 'App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/user', 'App\Http\Controllers\Auth\RegisterController@register');
+
+Route::get('/show',[\App\Http\Controllers\TransactionController::class, 'index'])->name('show');
+Route::post('/deposite',[\App\Http\Controllers\TransactionController::class, 'deposite'])->name('deposite.store');
+Route::get('/deposite',[\App\Http\Controllers\TransactionController::class, 'get_deposite'])->name('deposite.view');
+Route::get('/createDeposite',[\App\Http\Controllers\TransactionController::class, 'createDeposite'])->name('createDeposite');

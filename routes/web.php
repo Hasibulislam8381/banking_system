@@ -20,3 +20,6 @@ Route::get('/show',[\App\Http\Controllers\TransactionController::class, 'index']
 Route::post('/deposite',[\App\Http\Controllers\TransactionController::class, 'deposite'])->name('deposite.store');
 Route::get('/deposite',[\App\Http\Controllers\TransactionController::class, 'get_deposite'])->name('deposite.view');
 Route::get('/createDeposite',[\App\Http\Controllers\TransactionController::class, 'createDeposite'])->name('createDeposite');
+Route::get('/createWithdraw',[\App\Http\Controllers\TransactionController::class, 'createWithdraw'])->name('createWithdraw');
+Route::post('/withdraw',[\App\Http\Controllers\TransactionController::class, 'withdraw'])->name('withdraw.store');
+Route::get('/withdraw',[\App\Http\Controllers\TransactionController::class, 'view_withdraw'])->name('withdraw.view');

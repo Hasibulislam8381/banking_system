@@ -3,7 +3,7 @@
 @php
 $user = \App\Models\User::find(auth()->id()); 
 $transaction_info = \App\Models\Transaction::where('user_id', auth()->id())
-    ->where('transaction_type', 'deposit') 
+    ->where('transaction_type', 'withdraw') 
     ->orderBy('id', 'desc') 
     ->get();
 

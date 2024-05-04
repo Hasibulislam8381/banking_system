@@ -23,6 +23,11 @@ class TransactionController extends Controller
         return view('frontend.view_deposit');
         //
     }
+    public function view_withdraw()
+    {
+        return view('frontend.view_withdraw');
+        //
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -35,6 +40,11 @@ class TransactionController extends Controller
     {
         //
         return view('frontend.create_deposite');
+    }
+    public function createWithdraw()
+    {
+        //
+        return view('frontend.create_withdraw');
     }
 
     /**
@@ -78,6 +88,53 @@ class TransactionController extends Controller
         
         return redirect()->back()->with('success', 'Deposit successful!');
     }
+    public function withdraw(Request $request)
+{
+    $request->validate([
+        'amount' => 'required|numeric|min:0',
+    ]);
+
+    $user = Auth::user();
+
+    $withdrawalRate = $user->account_type === 'individual' ? 0.015 : 0.025;
+
+   
+    if ($user->account_type === 'business') {
+        $totalWithdrawal = $this->getTotalWithdrawalForAccount($user);
+        if ($totalWithdrawal >= 50000) {
+            
+            $withdrawalRate = 0.015;
+        }
+    }
+
+
+    $withdrawalFee = $request->amount * $withdrawalRate;
+
+    $newBalance = $user->balance - ($request->amount + $withdrawalFee);
+
+ 
+    $user->update(['balance' => $newBalance]);
+
+    Transaction::create([
+        'user_id' => $user->id,
+        'amount' => $request->amount,
+        'fee' => $withdrawalFee,
+        'transaction_type' => 'withdraw', 
+        'date' => now(),
+    ]);
+
+   
+    return redirect()->back()->with('success', 'Withdrawal successful!');
+}
+
+private function getTotalWithdrawalForAccount($user)
+{
+    return Transaction::where('user_id', $user->id)
+        ->where('transaction_type', 'withdraw')
+        ->where('amount', '>', 0) 
+        ->sum('amount');
+}
+
 
    
     public function show(string $id)

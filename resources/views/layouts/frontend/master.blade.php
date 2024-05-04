@@ -21,7 +21,9 @@
             <div class="navbar-nav">
               <a class="nav-link active" aria-current="page" href="{{ route('show') }}">Home</a>
               <a class="nav-link" href="{{ route("createDeposite") }}">Deposite</a>
+              <a class="nav-link" href="{{ route("createWithdraw") }}">Withdraw</a>
               <a class="nav-link" href="{{ route("deposite.view") }}">View Deposite</a>
+              <a class="nav-link" href="{{ route("withdraw.view") }}">View Withdraw</a>
               <a class="nav-link" href="#">Pricing</a>
               @auth <!-- Check if the user is authenticated -->
               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
